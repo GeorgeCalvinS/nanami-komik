@@ -17,19 +17,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. Buat Akun Admin (role_user = 1)
-        Pengguna::create([
-            'nama_user' => 'Admin Nanami',
+        Pengguna::updateOrCreate([
             'email_user' => 'admin@gmail.com',
-            'password' => Hash::make('admin123'), // Password admin
-            'role_user' => 1, 
+        ], [
+            'nama_user' => 'Admin Nanami',
+            'password' => Hash::make('admin123'),
+            'role_user' => 1,
         ]);
 
         // 2. Buat Akun Mahasiswa (role_user = 0)
-        Pengguna::create([
-            'nama_user' => 'Mahasiswa Testing',
+        Pengguna::updateOrCreate([
             'email_user' => 'testing12@gmail.com',
-            'password' => Hash::make('user123'), // Password mahasiswa
-            'role_user' => 0, 
+        ], [
+            'nama_user' => 'Mahasiswa Testing',
+            'password' => Hash::make('user123'),
+            'role_user' => 0,
         ]);
     }
 }

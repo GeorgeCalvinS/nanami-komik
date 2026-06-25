@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Chapter;
 use App\Models\Komik; // Panggil model Komik
 
 class KomikController extends Controller
@@ -27,5 +28,21 @@ class KomikController extends Controller
         // Nanti ini akan difilter berdasarkan Bookmark user yang sedang login
         // Untuk sekarang kita tampilkan view-nya dulu
         return view('library');
+    }
+
+    public function show(Komik $komik)
+    {
+        $komik->load(['chapters' => function ($query) {
+            $query->orderBy('nomor_chapter');
+        }]);
+
+        return view('komik.show', compact('komik'));
+    }
+
+    public function showChapter(Chapter $chapter)
+    {
+        $chapter->load('pages', 'komik');
+
+        return view('chapters.show', compact('chapter'));
     }
 }

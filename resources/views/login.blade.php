@@ -7,9 +7,16 @@
         
         <form action="/login" method="POST">
             @csrf
+
+            @if($errors->any())
+                <div class="mb-4 rounded bg-red-500/10 border border-red-500 text-red-100 p-3">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
             <div class="mb-4">
                 <label class="block text-gray-300 mb-2">Email Address</label>
-                <input type="email" name="email_user" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-teal-400 focus:outline-none" required>
+                <input type="email" name="email_user" value="{{ old('email_user') }}" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-teal-400 focus:outline-none" required>
             </div>
             
             <div class="mb-6">
