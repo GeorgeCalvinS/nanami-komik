@@ -21,10 +21,20 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
-                <a href="/login" class="bg-teal-500 hover:bg-teal-400 text-black px-4 py-2 rounded font-semibold text-sm">LOGIN</a>
+                @auth
+                    @if(auth()->user()->role_user === 1)
+                        <a href="{{ route('admin.dashboard') }}" class="bg-teal-500 hover:bg-teal-400 text-black px-4 py-2 rounded font-semibold text-sm">DASHBOARD</a>
+                    @endif
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="bg-red-500 hover:bg-red-400 text-black px-4 py-2 rounded font-semibold text-sm">LOGOUT</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="bg-teal-500 hover:bg-teal-400 text-black px-4 py-2 rounded font-semibold text-sm">LOGIN</a>
+                @endauth
             </div>
         </div>
-        <div id="mobile-menu" class="md:hidden hidden border-t border-gray-700 mt-3 pt-3">
+        <div id="mobile-menu" class="md:hidden hidden border-t border-gray-700 mt-3 pt-3">s
             <a href="/browse" class="block text-gray-300 hover:text-white py-2 transition">BROWSE</a>
             <a href="/library" class="block text-gray-300 hover:text-white py-2 transition">MY LIBRARY</a>
         </div>

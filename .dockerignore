@@ -1,0 +1,13 @@
+vendor
+node_modules
+.git
+.gitignore
+docker-compose.yml
+Dockerfile
+nginx/
+.dockerignore
+storage/framework/cache/data
+storage/logs
+storage/framework/sessions
+storage/framework/views
+database/*.sqlite

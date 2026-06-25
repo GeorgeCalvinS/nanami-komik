@@ -7,15 +7,16 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Chapter;
 
-class Komik extends Model
+class ChapterPage extends Model
 {
-    protected $table = 'komik'; // Sesuai nama tabel di SQL
-    protected $primaryKey = 'id_komik';
-    
-    // Kolom yang boleh diisi
-    protected $fillable = ['id_user', 'sinopsis_komik', 'nama_komik', 'url_cover', 'tanggal_rilis', 'status_pengerjaan'];
+    protected $table = 'chapter_pages';
+    protected $fillable = [
+        'id_chapter',
+        'page_number',
+        'file_path',
+    ];
 
-    public function getUrlCoverAttribute($value)
+    public function getFilePathAttribute($value)
     {
         if (!$value) {
             return $value;
@@ -51,8 +52,8 @@ class Komik extends Model
         return $value;
     }
 
-    public function chapters()
+    public function chapter()
     {
-        return $this->hasMany(Chapter::class, 'id_komik', 'id_komik');
+        return $this->belongsTo(Chapter::class, 'id_chapter', 'id_chapter');
     }
 }
