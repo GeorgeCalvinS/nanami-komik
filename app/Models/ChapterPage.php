@@ -6,22 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Chapter;
-use App\Models\Rating;
-use App\Models\Komentar;
-use App\Models\Like;
 
-class Komik extends Model
+class ChapterPage extends Model
 {
-    protected $table = 'komik';
-    protected $primaryKey = 'id_komik';
+    protected $table = 'chapter_pages';
+    protected $fillable = [
+        'id_chapter',
+        'page_number',
+        'file_path',
+    ];
 
-    protected $fillable = ['id_user', 'sinopsis_komik', 'nama_komik', 'url_cover', 'tanggal_rilis', 'status_pengerjaan'];
-
-    // =====================
-    // URL Cover Accessor
-    // =====================
-
-    public function getUrlCoverAttribute($value)
+    public function getFilePathAttribute($value)
     {
         if (!$value) {
             return $value;
@@ -57,36 +52,8 @@ class Komik extends Model
         return $value;
     }
 
-    // =====================
-    // Relasi
-    // =====================
-
-    public function chapters()
+    public function chapter()
     {
-        return $this->hasMany(Chapter::class, 'id_komik', 'id_komik');
-    }
-
-    public function ratings()
-    {
-        return $this->hasMany(Rating::class, 'id_komik', 'id_komik');
-    }
-
-    public function komentar()
-    {
-        return $this->hasMany(Komentar::class, 'id_komik', 'id_komik');
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(Like::class, 'id_komik', 'id_komik');
-    }
-
-    // =====================
-    // Accessor Rating Rata
-    // =====================
-
-    public function getRatingRataAttribute()
-    {
-        return $this->ratings()->avg('nilai') ?? 0;
+        return $this->belongsTo(Chapter::class, 'id_chapter', 'id_chapter');
     }
 }
